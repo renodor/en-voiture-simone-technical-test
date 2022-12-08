@@ -4,6 +4,7 @@
 # as it is used by ActiveRecord
 class PotatoTransaction < ApplicationRecord
   validates :quantity, :price, :time, :direction, presence: true
+  validates :time, uniquness: true, { scope: :user_id }
   validate :is_allowed
 
   belongs_to :user
