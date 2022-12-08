@@ -1,3 +1,4 @@
 class PotatoPrice < ApplicationRecord
-  validates :prce, :date, presence: true
+  validates :price, :time, presence: true
+  validates :time, uniqueness: true
 end

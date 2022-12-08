@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_142036) do
 
   create_table "potato_prices", force: :cascade do |t|
     t.decimal "price", precision: 10, scale: 2, default: "0.0", null: false
-    t.datetime "date", null: false
+    t.datetime "time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
