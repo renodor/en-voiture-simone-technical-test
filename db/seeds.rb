@@ -10,13 +10,18 @@ puts 'Destroying all potato prices'
 PotatoPrice.destroy_all
 
 puts 'Creating potato prices'
+
 # Creating prices for only 1 hour for now to not overload the DB and slowdown Seeds too much
-(DateTime.new(2022, 1, 1, 0, 0, 0).to_i..DateTime.new(2022, 1, 1, 0, 59, 59).to_i).to_a.each do |time|
+today_year  = Date.today.year
+today_month = Date.today.month
+today_day   = Date.today.day
+(DateTime.new(today_year, today_month, today_day, 0, 0, 0).to_i..DateTime.new(today_year, today_month, today_day, 0, 59, 59).to_i).to_a.each do |time|
   PotatoPrice.create!(
     price: rand(90.0..110.0).ceil(2),
     time: Time.at(time)
   )
 end
+
 puts "#{PotatoPrice.count} potato prices created"
 
 puts 'Create user'
