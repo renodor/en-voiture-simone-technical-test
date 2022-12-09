@@ -1,15 +1,18 @@
 # frozen_string_literal:true
 
 class PotatoPricesController < ApplicationController
-  # Would probably need allow time range params to filter result by time
-  # and not return all prices all the time
   def index
-    potato_prices = PotatoPrice.ascend_by_time.select(:price, :time, :id)
+    return render json: { error: 'date param is missing' } unless params[:date] # TODO: refacto
+
+    date = Date.parse(params[:date]) # TODO: check date format is correct before parsing
+    potato_prices = PotatoPrice.at_date(date).ascend_by_time.select(:price, :time, :id)
 
     render json: potato_prices.to_json
   end
 
   def best_deal_at_date
+    return render json: { error: 'date param is missing' } unless params[:date]
+
     date = Date.parse(params[:date]) # TODO: check date format is correct before parsing
     min_max_at_date = PotatoPrice.min_max_at_date(date)
 
@@ -20,7 +23,7 @@ class PotatoPricesController < ApplicationController
       render json: {
         min_price: min_price,
         max_price: max_price,
-        max_profit: (max_price * PotatoTransaction::MAX_DAILY_QUANTITY) - (min_price * PotatoTransaction::MAX_DAILY_QUANTITY)
+        max_profit: (max_price * PotatoTransactionMAX_DAILY_QUANTITY) - (min_price * PotatoTransactionMAX_DAILY_QUANTITY)
       }
     else
       render json: {
