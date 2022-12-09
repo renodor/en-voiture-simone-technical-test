@@ -23,8 +23,3 @@ today_day   = Date.today.day
 end
 
 puts "#{PotatoPrice.count} potato prices created"
-
-puts 'Create user'
-User.create!(
-  username: 'renodor'
-)
