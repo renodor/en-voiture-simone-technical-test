@@ -9,7 +9,7 @@ class PotatoPricesController < ApplicationController
     date = Date.parse(params[:date]) # TODO: check date format is correct before parsing
     potato_prices = PotatoPrice.at_date(date).ascend_by_time.select(:price, :time, :id)
 
-    render json: potato_prices.to_json
+    render json: potato_prices.as_json(except: :id)
   end
 
   def best_deal
