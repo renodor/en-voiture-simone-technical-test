@@ -19,7 +19,7 @@ class PotatoPrice < ApplicationRecord
     potato_prices = PotatoPrice.at_date(date).descend_by_time
 
     # Not the best pattern, but good enought here
-    # (in a real API we would calculate this min/max in dedicated service
+    # (in a real API we would probably calculate this min/max in a dedicated service
     # that raise specific errors that we could catch and respond from)
     return { success?: false } if potato_prices.count <= 1
 
@@ -27,7 +27,7 @@ class PotatoPrice < ApplicationRecord
     min_potato_price = potato_prices.last
     max_diff = 0
 
-    # Traverse potato prices ordered by time
+    # Traverse potato prices ordered by descending time
     # keeping track of the record with the max price and the max difference between known prices
     potato_prices.each do |potato_price|
       # If current potato price is higher than the max potato price, we have a new max potato price
@@ -36,8 +36,8 @@ class PotatoPrice < ApplicationRecord
       # If the difference between the max potato price and the current potato price is higher
       # than the max difference, we have a new max difference (and thus a new min potato price)
       elsif max_potato_price.price - potato_price.price > max_diff
-        min_potato_price = potato_price
         max_diff = max_potato_price.price - potato_price.price
+        min_potato_price = potato_price
       end
     end
 
