@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :potato_prices, only: :index do
     collection do
-      get 'best_deal_for_day'
+      get 'best_deal_at_date'
     end
   end
 end

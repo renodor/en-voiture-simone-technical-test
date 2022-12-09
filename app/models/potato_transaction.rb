@@ -17,7 +17,7 @@ class PotatoTransaction < ApplicationRecord
 
   before_validation :add_price
 
-  MAX_DAILY_QUANTITY = 100.freeze
+  MAX_DAILY_QUANTITY = 100
 
   private
 
